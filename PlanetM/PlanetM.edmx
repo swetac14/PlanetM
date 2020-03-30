@@ -48,15 +48,6 @@
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Body" Type="varchar" MaxLength="8000" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Profiles">
-          <Key>
-            <PropertyRef Name="ProfileID" />
-          </Key>
-          <Property Name="ProfileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="Tags">
           <Key>
             <PropertyRef Name="TagID" />
@@ -136,12 +127,6 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
           <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Profiles" EntityType="Self.Profiles" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Profiles].[ProfileID] AS [ProfileID], 
-    [Profiles].[Name] AS [Name]
-    FROM [dbo].[Profiles] AS [Profiles]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Courses_Authors" Association="Self.FK_Courses_Authors">
             <End Role="Authors" EntitySet="Authors" />
             <End Role="Courses" EntitySet="Courses" />
@@ -179,7 +164,7 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
           <Property Name="AuthorID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Level" Type="String" Nullable="false" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Author" Relationship="Self.FK_Courses_Authors" FromRole="Courses" ToRole="Authors" />
           <NavigationProperty Name="CourseSections" Relationship="Self.FK_CourseSections_Courses" FromRole="Courses" ToRole="CourseSections" />
           <NavigationProperty Name="Tags" Relationship="Self.CourseTags" FromRole="Courses" ToRole="Tags" />
@@ -270,15 +255,7 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
             <End Role="Courses" EntitySet="Courses" />
             <End Role="Tags" EntitySet="Tags" />
           </AssociationSet>
-          <EntitySet Name="Profiles" EntityType="PlanetMModel.Profile" />
         </EntityContainer>
-        <EntityType Name="Profile">
-          <Key>
-            <PropertyRef Name="ProfileID" />
-          </Key>
-          <Property Name="ProfileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -349,14 +326,6 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
               <ScalarProperty Name="TagID" ColumnName="TagID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Profiles">
-            <EntityTypeMapping TypeName="PlanetMModel.Profile">
-              <MappingFragment StoreEntitySet="Profiles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
