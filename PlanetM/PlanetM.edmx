@@ -20,9 +20,8 @@
           <Property Name="AuthorID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="8000" Nullable="false" />
-          <Property Name="Price" Type="smallint" Nullable="false" />
-          <Property Name="LevelString" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Level" Type="tinyint" Nullable="false" />
+          <Property Name="TotalPrice" Type="smallint" Nullable="false" />
+          <Property Name="Level" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="CourseSections">
           <Key>
@@ -56,6 +55,7 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
             <PropertyRef Name="ProfileID" />
           </Key>
           <Property Name="ProfileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -138,7 +138,8 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profiles" EntityType="Self.Profiles" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Profiles].[ProfileID] AS [ProfileID]
+    [Profiles].[ProfileID] AS [ProfileID], 
+    [Profiles].[Name] AS [Name]
     FROM [dbo].[Profiles] AS [Profiles]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Courses_Authors" Association="Self.FK_Courses_Authors">
@@ -178,12 +179,11 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
           <Property Name="AuthorID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Price" Type="Int16" Nullable="false" />
-          <Property Name="LevelString" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Level" Type="Byte" Nullable="false" />
+          <Property Name="Level" Type="String" Nullable="false" />
           <NavigationProperty Name="Author" Relationship="Self.FK_Courses_Authors" FromRole="Courses" ToRole="Authors" />
           <NavigationProperty Name="CourseSections" Relationship="Self.FK_CourseSections_Courses" FromRole="Courses" ToRole="CourseSections" />
           <NavigationProperty Name="Tags" Relationship="Self.CourseTags" FromRole="Courses" ToRole="Tags" />
+          <Property Name="TotalPrice" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="CourseSection">
           <Key>
@@ -277,6 +277,7 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
             <PropertyRef Name="ProfileID" />
           </Key>
           <Property Name="ProfileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -295,13 +296,12 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="PlanetMModel.Course">
               <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="LevelString" ColumnName="LevelString" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -352,6 +352,7 @@ warning 6002: The table/view 'PlanetM.dbo.Profiles' does not have a primary key 
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="PlanetMModel.Profile">
               <MappingFragment StoreEntitySet="Profiles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
               </MappingFragment>
             </EntityTypeMapping>

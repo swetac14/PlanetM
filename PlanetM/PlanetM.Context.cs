@@ -31,5 +31,6 @@ namespace PlanetM
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
     }
 }
